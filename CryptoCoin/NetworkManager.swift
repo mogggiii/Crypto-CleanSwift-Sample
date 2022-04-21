@@ -6,40 +6,29 @@
 //
 
 import Foundation
+import Alamofire
 
 final class NetworkManager {
 	
 	static let shared = NetworkManager()
 	
-	let url = "https://coinlib.io/api/v1/coinlist?key=2762e6e300acc1ae&pref=USD&page=1&order=volume_desc"
-	
 	private init () {}
 	
-	func coinResponse(with url: String, completionHandler: @escaping (Result<Coins, Error>) -> ()) {
-		return self.codableTask(with: url, completion: completionHandler)
+	func fetchCrypto(completion: @escaping (Coins?) -> ()) {
+		let url = "https://coinlib.io/api/v1/coinlist?key=2762e6e300acc1ae&pref=USD&page=1&order=volume_desc"
+		
+		AF.request(url).responseDecodable(of: Coins.self) { response in
+			switch response.result {
+			case .success(let data):
+				print(data.coins.count)
+				completion(data)
+			case .failure(let error):
+				print("NIL")
+				completion(nil)
+			}
+		}
+			
+		}
 	}
 	
-	fileprivate func codableTask<T: Codable> (with url: String, completion: @escaping (Result<T, Error>) -> ()) {
-		guard let url = URL(string: url) else { return }
-		URLSession.shared.dataTask(with: url) { data, _, error in
-			if let error = error {
-				print("Error")
-				completion(.failure(error))
-				return
-			}
-			
-			guard let data = data else { return }
-			
-			do {
-				let cryptoCoins = try JSONDecoder().decode(T.self, from: data)
-				completion(.success(cryptoCoins))
-			} catch let error {
-				print("Error", error.localizedDescription)
-				completion(.failure(error))
-			}
-		} .resume()
-	}
-}
-
-
 
