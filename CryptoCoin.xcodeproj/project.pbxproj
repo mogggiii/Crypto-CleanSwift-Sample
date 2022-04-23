@@ -20,7 +20,6 @@
 		CEAEED2A280944E700CFC7F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAEED29280944E700CFC7F8 /* Assets.xcassets */; };
 		CEAEED2D280944E700CFC7F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAEED2B280944E700CFC7F8 /* LaunchScreen.storyboard */; };
 		CEB2017A280ACF300065C02E /* Coins.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB20179280ACF2F0065C02E /* Coins.swift */; };
-		CEB2017C280AD18C0065C02E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB2017B280AD18C0065C02E /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 		CEAEED2C280944E700CFC7F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEAEED2E280944E700CFC7F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB20179280ACF2F0065C02E /* Coins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coins.swift; sourceTree = "<group>"; };
-		CEB2017B280AD18C0065C02E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +134,6 @@
 				CE30731E2811CC2300C96DA7 /* App */,
 				CE30731D2811CC1700C96DA7 /* Crypto */,
 				CEAEED2E280944E700CFC7F8 /* Info.plist */,
-				CEB2017B280AD18C0065C02E /* NetworkManager.swift */,
 				CEAEED29280944E700CFC7F8 /* Assets.xcassets */,
 				CEAEED2B280944E700CFC7F8 /* LaunchScreen.storyboard */,
 				CEB20179280ACF2F0065C02E /* Coins.swift */,
@@ -261,7 +258,6 @@
 				CE3073282811CC5A00C96DA7 /* CryptoWorker.swift in Sources */,
 				CEAEED21280944E200CFC7F8 /* AppDelegate.swift in Sources */,
 				CE30732A2811CC5A00C96DA7 /* CryptoModels.swift in Sources */,
-				CEB2017C280AD18C0065C02E /* NetworkManager.swift in Sources */,
 				CEB2017A280ACF300065C02E /* Coins.swift in Sources */,
 				CEAEED23280944E200CFC7F8 /* SceneDelegate.swift in Sources */,
 				CE30732F2811CF1000C96DA7 /* CryptoCell.swift in Sources */,

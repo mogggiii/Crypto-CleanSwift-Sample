@@ -9,27 +9,32 @@
 import UIKit
 
 protocol CryptoBusinessLogic {
-  func makeRequest(request: Crypto.Model.Request.RequestType)
+	func makeRequest(request: Crypto.Model.Request.RequestType)
 }
 
 class CryptoInteractor: CryptoBusinessLogic {
-
-  var presenter: CryptoPresentationLogic?
-  var service: CryptoService?
-  
-  func makeRequest(request: Crypto.Model.Request.RequestType) {
-    if service == nil {
-      service = CryptoService()
-    }
+	
+	var presenter: CryptoPresentationLogic?
+	var service: CryptoService?
+	
+	func makeRequest(request: Crypto.Model.Request.RequestType) {
+		if service == nil {
+			service = CryptoService()
+		}
 		
 		switch request {
 		case .fetchCrypto:
-			NetworkManager.shared.fetchCrypto { coins in
-				guard let coins = coins else { return }
-
-				self.presenter?.presentData(response: Crypto.Model.Response.ResponseType.presentCrypto(response: coins))
-			}
+			service?.fetchCrypto(completion: { result in
+				switch result {
+				case .success(let coins):
+					guard let coins = coins else { return }
+					self.presenter?.presentData(response: .presentCrypto(response: coins))
+				case .failure(let error):
+					self.presenter?.presentData(response: .presentError(error: error))
+					print(error)
+				}
+			})
 		}
-  }
-  
+	}
+	
 }

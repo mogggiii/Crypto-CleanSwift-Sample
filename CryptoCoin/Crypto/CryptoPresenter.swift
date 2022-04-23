@@ -24,10 +24,14 @@ class CryptoPresenter: CryptoPresentationLogic {
 			
 			let cryptoViewModel = CryptoViewModel.init(cells: cells)
 			viewController?.displayData(viewModel: Crypto.Model.ViewModel.ViewModelData.displayCrypto(cryptoViewModel: cryptoViewModel))
+		case .presentError(error: let error):
+			print(error.localizedDescription)
+			let message = "The request timed out."
+			viewController?.displayData(viewModel: .displayError(errorMessage: message))
 		}
   }
   
 	private func cellViewModel(for coin: Coin) -> CryptoViewModel.Cell {
-		return CryptoViewModel.Cell.init(name: coin.name, price: coin.price, delta24H: coin.delta24H)
+		return CryptoViewModel.Cell.init(name: coin.name, price: coin.price, delta24H: coin.delta24H, symbol: coin.symbol)
 	}
 }

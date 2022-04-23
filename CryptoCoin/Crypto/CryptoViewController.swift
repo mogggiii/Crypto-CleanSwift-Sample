@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol CryptoDisplayLogic: class {
+protocol CryptoDisplayLogic: AnyObject {
 	func displayData(viewModel: Crypto.Model.ViewModel.ViewModelData)
 }
 
 class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 	
-	var cryptoViewModel = CryptoViewModel.init(cells: [])
+	fileprivate var cryptoViewModel = CryptoViewModel.init(cells: [])
 	var interactor: CryptoBusinessLogic?
 	var router: (NSObjectProtocol & CryptoRoutingLogic)?
 	
@@ -43,9 +43,10 @@ class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setup()
+		setupNavBar()
+		fetchCoins()
 		
 		tableView.register(CryptoCell.self, forCellReuseIdentifier: "cellId")
-		fetchCoins()
 	}
 	
 	func displayData(viewModel: Crypto.Model.ViewModel.ViewModelData) {
@@ -53,28 +54,44 @@ class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 		case .displayCrypto(cryptoViewModel: let cryptoViewModel):
 			self.cryptoViewModel = cryptoViewModel
 			self.tableView.reloadData()
+		case .displayError(errorMessage: let errorMessage):
+			self.errorAlert(errorMessage: errorMessage)
 		}
 	}
 	
-	func fetchCoins() {
+	fileprivate func fetchCoins() {
+		interactor?.makeRequest(request: .fetchCrypto)
+		print("Interactor first")
+	}
+	
+	fileprivate func errorAlert(errorMessage: String) {
+		let alert = UIAlertController(title: "Oops. Something went wrong.", message: errorMessage, preferredStyle: .alert)
+		let dismissAction = UIAlertAction(title: "OK", style: .destructive)
+		
+		alert.addAction(dismissAction)
+		present(alert, animated: true)
+	}
+	
+	fileprivate func setupNavBar() {
+		title = "Coins"
+		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(handleRefresh))
+	}
+	
+	// MARK: - Objc fileprivate methods
+	@objc fileprivate func handleRefresh() {
 		interactor?.makeRequest(request: .fetchCrypto)
 	}
 	
 	// MARK: - Table View Data Source
-	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return cryptoViewModel.cells.count
-	}
-	
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 84
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! CryptoCell
 		let cellViewModel = cryptoViewModel.cells[indexPath.row]
-		cell.set(viewModel: cellViewModel)
-		
+		cell.cellViewModel = cellViewModel
 		return cell
 	}
 }

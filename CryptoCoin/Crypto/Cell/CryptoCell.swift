@@ -9,29 +9,66 @@ import UIKit
 
 class CryptoCell: UITableViewCell {
 	
-	var cell: CryptoViewModel.Cell?
+	var cellViewModel: CryptoViewModel.Cell? {
+		didSet {
+			guard let cellViewModel = cellViewModel else { return }
+			let price = Float(cellViewModel.price)
+			
+			coinPreviewLabel.text = cellViewModel.symbol
+			coinSymbolLabel.text = cellViewModel.symbol
+			coinShowNameLabel.text = cellViewModel.name
+			coinPriceLabel.text = String(format: "%.2f", price ?? 0.0) + "$"
+			
+			if cellViewModel.delta24H.contains("-") {
+				deltaLabel.text = "\(cellViewModel.delta24H)%"
+				deltaLabel.textColor = .red
+			} else {
+				deltaLabel.text = "+\(cellViewModel.delta24H)%"
+				deltaLabel.textColor = .green
+			}
+		}
+	}
 	
-	var coinNameLabel: UILabel = {
+	// MARK: - UI Components
+	fileprivate let coinPreviewLabel: UILabel = {
 		let label = UILabel()
-		label.font = .systemFont(ofSize: 17, weight: .medium)
+		label.font = .systemFont(ofSize: 18, weight: .bold)
+		label.backgroundColor = UIColor(red: 11 / 255, green: 132 / 255, blue: 255 / 255, alpha: 0.75)
+		label.layer.cornerRadius = 60 / 2
+		label.layer.masksToBounds = true
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.textAlignment = .center
+		return label
+	}()
+	
+	fileprivate let coinSymbolLabel: UILabel = {
+		let label = UILabel()
+		label.font = .systemFont(ofSize: 18, weight: .bold)
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
 	
-	var priceLabel: UILabel = {
+	fileprivate let coinShowNameLabel: UILabel = {
 		let label = UILabel()
-		label.font = .systemFont(ofSize: 17, weight: .medium)
+		label.font = .systemFont(ofSize: 17, weight: .light)
+		label.textColor = .gray
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
 	
-	var deltaLabel: UILabel = {
+	fileprivate let coinPriceLabel: UILabel = {
 		let label = UILabel()
-		label.font = .systemFont(ofSize: 17, weight: .medium)
-		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = .systemFont(ofSize: 18, weight: .bold)
 		return label
 	}()
 	
+	fileprivate let deltaLabel: UILabel = {
+		let label = UILabel()
+		label.font = .systemFont(ofSize: 15, weight: .regular)
+		return label
+	}()
+	
+	// MARK: - Init
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		configureCell()
@@ -40,41 +77,40 @@ class CryptoCell: UITableViewCell {
 	required init? (coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-	func set(viewModel: CryptoViewModel.Cell) {
-		self.cell = viewModel
-		coinNameLabel.text = viewModel.name
-		priceLabel.text = viewModel.price
-		deltaLabel.text = viewModel.delta24H
-		
-		if viewModel.delta24H.contains("-") {
-			deltaLabel.textColor = .red
-		} else {
-			deltaLabel.textColor = .green
-		}
-	}
-	
+
+	// MARK: - Fileprivate Methods
 	fileprivate func configureCell() {
-		let stackView = UIStackView(arrangedSubviews: [
-			coinNameLabel,
-			priceLabel,
-			deltaLabel
-		])
+		let symbolPriceStackView = createStackView(views: [coinSymbolLabel, coinPriceLabel], axis: .horizontal)
+		let coinNameDeltaStackView = createStackView(views: [coinShowNameLabel, deltaLabel], axis: .horizontal)
 		
-		stackView.axis = .horizontal
-		stackView.spacing = 15
-		stackView.distribution = .fillEqually
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-		
-		contentView.addSubview(stackView)
+		[symbolPriceStackView, coinNameDeltaStackView, coinPreviewLabel].forEach { view in
+			contentView.addSubview(view)
+		}
 		
 		NSLayoutConstraint.activate([
-			stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-			stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
-			stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-			stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8),
+			coinPreviewLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
+			coinPreviewLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
+			coinPreviewLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+			coinPreviewLabel.heightAnchor.constraint(equalToConstant: 60),
+			coinPreviewLabel.widthAnchor.constraint(equalToConstant: 60),
+	
+			symbolPriceStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+			symbolPriceStackView.leadingAnchor.constraint(equalTo: coinPreviewLabel.trailingAnchor, constant: 16),
+			symbolPriceStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+			
+			coinNameDeltaStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+			coinNameDeltaStackView.leadingAnchor.constraint(equalTo: coinPreviewLabel.trailingAnchor, constant: 16),
+			coinNameDeltaStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+			
 		])
 		
 	}
 	
+	fileprivate func createStackView(views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView {
+		let stackView = UIStackView(arrangedSubviews: views)
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.axis = axis
+		stackView.distribution = .equalCentering
+		return stackView
+	}
 }

@@ -19,11 +19,13 @@ enum Crypto {
     struct Response {
       enum ResponseType {
 				case presentCrypto(response: Coins)
+				case presentError(error: Error)
       }
     }
     struct ViewModel {
       enum ViewModelData {
 				case displayCrypto(cryptoViewModel: CryptoViewModel)
+				case displayError(errorMessage: String)
       }
     }
   }
@@ -35,11 +37,13 @@ class CryptoViewModel {
 		let name: String
 		let price: String
 		let delta24H: String
+		let symbol: String
 		
-		init(name: String, price: String, delta24H: String) {
+		init(name: String, price: String, delta24H: String, symbol: String) {
 			self.name = name
 			self.price = price
 			self.delta24H = delta24H
+			self.symbol = symbol
 		}
 	}
 	
