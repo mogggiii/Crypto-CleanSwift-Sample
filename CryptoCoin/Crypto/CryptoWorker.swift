@@ -12,7 +12,7 @@ import Alamofire
 class CryptoService {
 	
 	func fetchCrypto(completion: @escaping (Result<Coins?, Error>) -> ()) {
-		fileprivate let url = "https://coinlib.io/api/v1/coinlist?key=2762e6e300acc1ae&pref=USD&page=1&order=volume_desc"
+		let url = "https://coinlib.io/api/v1/coinlist?key=2762e6e300acc1ae&pref=USD&page=1&order=volume_desc"
 		
 		AF.request(url).responseDecodable(of: Coins.self) { response in
 			switch response.result {
