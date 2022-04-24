@@ -3,4 +3,4 @@
 ## Crypto Price
 + Clean Swift
 + Alamofire
-+ JGProgressHUd
++ JGProgressHUD
