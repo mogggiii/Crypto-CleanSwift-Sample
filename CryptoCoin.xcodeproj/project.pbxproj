@@ -20,6 +20,9 @@
 		CEAEED2A280944E700CFC7F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAEED29280944E700CFC7F8 /* Assets.xcassets */; };
 		CEAEED2D280944E700CFC7F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAEED2B280944E700CFC7F8 /* LaunchScreen.storyboard */; };
 		CEB2017A280ACF300065C02E /* Coins.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB20179280ACF2F0065C02E /* Coins.swift */; };
+		CEC228DB281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif in Resources */ = {isa = PBXBuildFile; fileRef = CEC228D8281560F800D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif */; };
+		CEC228DC281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif in Resources */ = {isa = PBXBuildFile; fileRef = CEC228D9281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif */; };
+		CEC228DD281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif in Resources */ = {isa = PBXBuildFile; fileRef = CEC228DA281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		CEAEED2C280944E700CFC7F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEAEED2E280944E700CFC7F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB20179280ACF2F0065C02E /* Coins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coins.swift; sourceTree = "<group>"; };
+		CEC228D8281560F800D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif"; sourceTree = "<group>"; };
+		CEC228D9281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif"; sourceTree = "<group>"; };
+		CEC228DA281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +136,7 @@
 		CEAEED1F280944E200CFC7F8 /* CryptoCoin */ = {
 			isa = PBXGroup;
 			children = (
+				CEC228D7281560E600D23468 /* Readme */,
 				CE30731F2811CC2B00C96DA7 /* Supporting Files */,
 				CE30731E2811CC2300C96DA7 /* App */,
 				CE30731D2811CC1700C96DA7 /* Crypto */,
@@ -139,6 +146,16 @@
 				CEB20179280ACF2F0065C02E /* Coins.swift */,
 			);
 			path = CryptoCoin;
+			sourceTree = "<group>";
+		};
+		CEC228D7281560E600D23468 /* Readme */ = {
+			isa = PBXGroup;
+			children = (
+				CEC228D8281560F800D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif */,
+				CEC228DA281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif */,
+				CEC228D9281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif */,
+			);
+			path = Readme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAEED2D280944E700CFC7F8 /* LaunchScreen.storyboard in Resources */,
+				CEC228DC281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.35.03.gif in Resources */,
+				CEC228DD281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 17.34.50.gif in Resources */,
+				CEC228DB281560F900D23468 /* Simulator Screen Recording - iPhone SE (2nd generation) - 2022-04-24 at 16.00.35.gif in Resources */,
 				CEAEED2A280944E700CFC7F8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
