@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 protocol CryptoDisplayLogic: AnyObject {
 	func displayData(viewModel: Crypto.Model.ViewModel.ViewModelData)
@@ -15,6 +16,8 @@ protocol CryptoDisplayLogic: AnyObject {
 class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 	
 	fileprivate var cryptoViewModel = CryptoViewModel.init(cells: [])
+	fileprivate let hud = JGProgressHUD(style: .dark)
+	
 	var interactor: CryptoBusinessLogic?
 	var router: (NSObjectProtocol & CryptoRoutingLogic)?
 	
@@ -53,15 +56,22 @@ class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 		switch viewModel {
 		case .displayCrypto(cryptoViewModel: let cryptoViewModel):
 			self.cryptoViewModel = cryptoViewModel
-			self.tableView.reloadData()
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+				self.hud.dismiss(animated: true)
+			}
+			
 		case .displayError(errorMessage: let errorMessage):
 			self.errorAlert(errorMessage: errorMessage)
+			hud.dismiss(animated: true)
 		}
 	}
 	
+	// MARK: - Fileprivate methods
 	fileprivate func fetchCoins() {
+		hud.textLabel.text = "Loading"
+		hud.show(in: tableView)
 		interactor?.makeRequest(request: .fetchCrypto)
-		print("Interactor first")
 	}
 	
 	fileprivate func errorAlert(errorMessage: String) {
@@ -74,12 +84,14 @@ class CryptoViewController: UITableViewController, CryptoDisplayLogic {
 	
 	fileprivate func setupNavBar() {
 		title = "Coins"
-		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationController?.navigationBar.prefersLargeTitles = false
 		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(handleRefresh))
 	}
 	
 	// MARK: - Objc fileprivate methods
 	@objc fileprivate func handleRefresh() {
+		hud.textLabel.text = "Loading"
+		hud.show(in: view)
 		interactor?.makeRequest(request: .fetchCrypto)
 	}
 	

@@ -24,13 +24,13 @@ class CryptoInteractor: CryptoBusinessLogic {
 		
 		switch request {
 		case .fetchCrypto:
-			service?.fetchCrypto(completion: { result in
+			service?.fetchCrypto(completion: { [weak self] result in
 				switch result {
 				case .success(let coins):
 					guard let coins = coins else { return }
-					self.presenter?.presentData(response: .presentCrypto(response: coins))
+					self?.presenter?.presentData(response: .presentCrypto(response: coins))
 				case .failure(let error):
-					self.presenter?.presentData(response: .presentError(error: error))
+					self?.presenter?.presentData(response: .presentError(error: error))
 					print(error)
 				}
 			})

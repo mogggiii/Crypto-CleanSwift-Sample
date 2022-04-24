@@ -6,5 +6,6 @@ target 'CryptoCoin' do
   use_frameworks!
 
   # Pods for CryptoCoin
-  pod 'Alamofire' 
+  pod 'Alamofire'
+  pod 'JGProgressHUD'
 end

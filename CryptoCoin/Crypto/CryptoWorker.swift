@@ -13,16 +13,20 @@ class CryptoService {
 	
 	func fetchCrypto(completion: @escaping (Result<Coins?, Error>) -> ()) {
 		let url = "https://coinlib.io/api/v1/coinlist?key=2762e6e300acc1ae&pref=USD&page=1&order=volume_desc"
-		
-		AF.request(url).responseDecodable(of: Coins.self) { response in
+		fetchGenericData(url: url, completion: completion)
+	}
+	
+	fileprivate func fetchGenericData<T: Decodable>(url: String, completion: @escaping (Result<T?, Error>) -> ()) {
+		guard let url = URL(string: url) else { return }
+		AF.request(url).responseDecodable(of: T.self) { response in
 			switch response.result {
 			case .success(let data):
-				print(data.coins.count)
 				completion(.success(data))
 			case .failure(let error):
-				print("NIL")
 				completion(.failure(error))
 			}
 		}
 	}
 }
+
+
